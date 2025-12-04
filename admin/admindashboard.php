@@ -67,11 +67,13 @@
               <a class="nav-link" href="chat_dashboard.php">       <i class="fa-solid fa-file-circle-question"></i>chats</a>
 </li>
 <li class="nav-item">
-              <a class="nav-link" href="add_exam.php">       <i class="fa-solid fa-file-circle-question"></i>Add Exam</a>
+              <a class="nav-link" href="add_exam.php">       <i class="fas fa-plus"></i>
+Add Exam</a>
 </li>
 
 <li class="nav-item">
-              <a class="nav-link" href="pass_evaluateexamid.php">       <i class="fa-solid fa-file-circle-question"></i>Evaluate Exam</a>
+              <a class="nav-link" href="pass_evaluateexamid.php">       <i class="fas fa-clipboard-check"></i>
+Evaluate Exam</a>
 </li>
 
 
