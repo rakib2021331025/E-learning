@@ -1,7 +1,15 @@
 <?php
 session_start();
 include '../dbconnection.php';
-include 'studentinclude/header.php';
+include './admininclude/header.php';
+
+// Admin session check
+$adminemail = $_SESSION['adminemail'] ?? $_SESSION['adminEmail'] ?? '';
+
+if(empty($adminemail) || !isset($_SESSION['loginstatus'])){
+    header("Location: addadmin.php");
+    exit();
+}
 
 if(!isset($_GET['room'])){
     die("Room parameter missing!");
@@ -35,7 +43,15 @@ $room = htmlspecialchars($_GET['room']);
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* Responsive for Android/Mobile */
+.live-class-info {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive for Android */
 @media screen and (max-width: 768px) {
     .live-class-container {
         padding: 10px;
@@ -52,6 +68,10 @@ $room = htmlspecialchars($_GET['room']);
         font-size: 14px;
     }
     
+    .live-class-header h3 {
+        font-size: 18px !important;
+    }
+    
     .live-class-info {
         padding: 10px;
         font-size: 14px;
@@ -60,25 +80,23 @@ $room = htmlspecialchars($_GET['room']);
 
 @media screen and (max-width: 600px) {
     .live-class-iframe {
-        height: 300px;
+        height: calc(100vh - 120px);
         min-height: 300px;
     }
 }
 
-.live-class-info {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .live-class-iframe {
+        height: calc(100vh - 100px);
+    }
 }
 </style>
 
-<div class="content-area">
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 mt-5 pt-4">
     <div class="live-class-container">
         <div class="live-class-header">
             <h3 class="mb-0">
-                <i class="fa-solid fa-video"></i> Live Class Session
+                <i class="fa-solid fa-video"></i> Live Class Session (Admin)
             </h3>
             <small>Room: <?php echo $room; ?></small>
         </div>
@@ -86,7 +104,7 @@ $room = htmlspecialchars($_GET['room']);
         <div class="live-class-info">
             <p class="mb-2">
                 <i class="fas fa-info-circle text-primary"></i> 
-                <strong>Instructions:</strong> Make sure your microphone and camera are enabled for the best experience.
+                <strong>Instructions:</strong> You are joining as Admin/Teacher. Make sure your microphone and camera are enabled.
             </p>
             <p class="mb-0">
                 <i class="fas fa-sign-in-alt text-success"></i> 
@@ -101,6 +119,5 @@ $room = htmlspecialchars($_GET['room']);
             allowfullscreen>
         </iframe>
     </div>
-</div>
+</main>
 
-<?php include 'studentinclude/footer.php'; ?>

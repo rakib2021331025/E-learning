@@ -18,6 +18,7 @@ if(isset($_POST['addQ'])){
     $c = $_POST['option_c'] ?? '';
     $d = $_POST['option_d'] ?? '';
     $correct = $_POST['correct_option'] ?? '';
+    $marks = isset($_POST['marks']) ? floatval($_POST['marks']) : 1;
 
     // Handle image upload
     $image_path = NULL;
@@ -32,9 +33,9 @@ if(isset($_POST['addQ'])){
     }
 
     $sql = "INSERT INTO exam_questions(exam_id, question_type, question_text,
-            option_a, option_b, option_c, option_d, correct_option, image_path)
+            option_a, option_b, option_c, option_d, correct_option, image_path, marks)
             VALUES($exam_id, '$type', '$text', '$a','$b','$c','$d','$correct', 
-            ".($image_path ? "'$image_path'" : "NULL").")";
+            ".($image_path ? "'$image_path'" : "NULL").", $marks)";
 
     if($conn->query($sql)){
         echo "<p class='success'>Question Added!</p>";
@@ -132,6 +133,9 @@ if(isset($_POST['addQ'])){
         <label>D:</label> <input type="text" name="option_d"><br>
         <label>Correct Option:</label> <input type="text" name="correct_option"><br>
     </div>
+
+   <label>Marks:</label>
+   <input type="number" name="marks" step="0.1" min="0" value="1" required>
 
     <div style="text-align:center; margin-top:15px;">
         <button name="addQ">Add Question</button>

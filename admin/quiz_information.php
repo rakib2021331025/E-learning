@@ -4,12 +4,16 @@ session_start();
 
 // Quiz Result + Student JOIN
 $sql = "
-    SELECT qr.id, qr.quiz_id, qr.obtained_marks, qr.student_email,
-           s.stu_name
-    FROM quiz_results AS qr
-    INNER JOIN student AS s
-    ON qr.student_email = s.stu_email
-    ORDER BY qr.quiz_id DESC
+SELECT qr.result_id, qr.quiz_id, qr.student_email, qr.obtained_marks, s.stu_name
+FROM quiz_results AS qr
+INNER JOIN student AS s
+ON qr.student_email = s.stu_email
+WHERE qr.result_id IN (
+    SELECT MAX(result_id)
+    FROM quiz_results
+    GROUP BY quiz_id, student_email
+)
+ORDER BY qr.quiz_id DESC;
 ";
 
 $result = $conn->query($sql);

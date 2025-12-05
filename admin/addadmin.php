@@ -13,10 +13,20 @@ if (isset($_POST['adminemail']) && isset($_POST['adminpass'])) {
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows === 1) {
+        $row = $result->fetch_assoc();
         $_SESSION['loginstatus'] = true;
-       // $_SESSION['admin_id'] = $row['admin_id'];
+        $_SESSION['adminemail'] = $adminemail;
+        $_SESSION['adminEmail'] = $adminemail;
+        
+        // Get admin_id if available
+        $admin_id_query = $conn->query("SELECT admin_id FROM admin_login WHERE admin_email='$adminemail' LIMIT 1");
+        if($admin_id_query && $admin_id_query->num_rows > 0){
+            $admin_row = $admin_id_query->fetch_assoc();
+            $_SESSION['admin_id'] = $admin_row['admin_id'] ?? 1;
+        } else {
+            $_SESSION['admin_id'] = 1;
+        }
 
-        $_SESSION['stuemail'] = $adminemail;
         echo json_encode(1);
     } else {
         echo json_encode(0);

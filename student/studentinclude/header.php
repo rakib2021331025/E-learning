@@ -49,6 +49,8 @@ if (!empty($stulogEmail)) {
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/all.min.css">
   <link rel="stylesheet" href="../css/adminstyle.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
   <style>
     body {
@@ -72,6 +74,21 @@ if (!empty($stulogEmail)) {
       justify-content: center; /* horizontal center */
       padding: 20px;
       background-color: #e9ecef;
+    }
+    
+    /* Responsive for mobile */
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 100% !important;
+        position: relative !important;
+        height: auto !important;
+        top: 0 !important;
+      }
+      .content-area {
+        margin-left: 0 !important;
+        height: auto !important;
+        padding: 10px !important;
+      }
     }
   </style>
 </body>  </style>
@@ -123,6 +140,13 @@ if (!empty($stulogEmail)) {
         <i class="fa-solid fa-clipboard-check"></i>
 
   Live exam
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="student_performance.php">
+        <i class="fa-solid fa-clipboard-check"></i>
+
+  My Performance
     </a>
 </li>
 

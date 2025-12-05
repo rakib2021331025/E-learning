@@ -13,7 +13,7 @@ if(isset($_POST['createExam'])){
     $duration = intval($_POST['duration']);
 
     $sql = "INSERT INTO exams(title, course_id, start_time, end_time, duration, status)
-            VALUES('$title', $course, '$start', '$end', $duration, 'active')";
+            VALUES('$title', $course, '$start', '$end', $duration, 1)";
 
     if($conn->query($sql)){
         $last_id = $conn->insert_id;

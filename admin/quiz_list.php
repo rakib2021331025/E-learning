@@ -44,10 +44,10 @@ if ($q->num_rows > 0) {
             (Course ID: <?php echo $row['course_id']; ?>)
 
             <!-- Add question button -->
-            <a href="add_question.php?quiz_id=<?php echo $row['id']; ?>">Add Question</a>
+            <a href="add_question.php?quiz_id=<?php echo $row['quiz_id']; ?>">Add Question</a>
 
             <!-- Student give quiz -->
-            <a href="start_quiz.php?quiz_id=<?php echo $row['id']; ?>">Start Quiz</a>
+            <a href="start_quiz.php?quiz_id=<?php echo $row['quiz_id']; ?>">Start Quiz</a>
         </p>
 <?php 
     }

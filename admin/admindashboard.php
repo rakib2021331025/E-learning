@@ -61,20 +61,26 @@
               <a class="nav-link" href="quiz_list.php">       <i class="fa-solid fa-file-circle-question"></i>quiz</a>
 </li>
             <li class="nav-item">
-              <a class="nav-link" href="add_assaignment.php">       <i class="fa-solid fa-file-circle-question"></i>assaignment</a>
+              <a class="nav-link" href="add_assaignment.php">     <i class="fa-solid fa-file-lines"></i>
+assaignment</a>
 </li>
 <li class="nav-item">
-              <a class="nav-link" href="chat_dashboard.php">       <i class="fa-solid fa-file-circle-question"></i>chats</a>
+              <a class="nav-link" href="chat_dashboard.php">   <i class="fa-regular fa-comment"></i>
+chats</a>
 </li>
 <li class="nav-item">
-              <a class="nav-link" href="add_exam.php">       <i class="fas fa-plus"></i>
+              <a class="nav-link" href="add_exam.php">   <i class="fa-solid fa-plus"></i>
 Add Exam</a>
 </li>
 
 <li class="nav-item">
-              <a class="nav-link" href="pass_evaluateexamid.php">       <i class="fas fa-clipboard-check"></i>
+              <a class="nav-link" href="pass_evaluateexamid.php">  <i class="fa-solid fa-clipboard-check"></i>
 Evaluate Exam</a>
 </li>
+
+
+
+
 
 
 
@@ -97,14 +103,37 @@ Evaluate Exam</a>
               $sql="SELECT * FROM course_order";
        $result=$conn->query($sql);
        $totalsol=$result->num_rows;
-       $sql="SELECT * FROM assignment_submissions";
+       // Assignment submissions count
+       $sql="SELECT COUNT(*) as total FROM assignment_submissions";
        $result=$conn->query($sql);
-       $totalass=$result->num_rows;
-              $sql="SELECT * FROM quiz_results";
+       $totalass = $result ? $result->fetch_assoc()['total'] : 0;
+       
+       // Pending assignment submissions count
+       $sql_pending_ass = "SELECT COUNT(*) as total FROM assignment_submissions WHERE status = 'Pending'";
+       $result_pending_ass = $conn->query($sql_pending_ass);
+       $pending_ass = $result_pending_ass ? $result_pending_ass->fetch_assoc()['total'] : 0;
+       
+       // Total quizzes count
+       $sql_quizzes = "SELECT COUNT(*) as total FROM quizzes";
+       $result_quizzes = $conn->query($sql_quizzes);
+       $totalquiz = $result_quizzes ? $result_quizzes->fetch_assoc()['total'] : 0;
+       
+       // Quiz submissions count (unique students who took quizzes)
+       $sql_quiz_submissions = "SELECT COUNT(DISTINCT student_email) as total FROM quiz_results";
+       $result_quiz_submissions = $conn->query($sql_quiz_submissions);
+       $total_quiz_submissions = $result_quiz_submissions ? $result_quiz_submissions->fetch_assoc()['total'] : 0;
+       
+       // Total quiz attempts
+       $sql_quiz_attempts = "SELECT COUNT(*) as total FROM quiz_results";
+       $result_quiz_attempts = $conn->query($sql_quiz_attempts);
+       $total_quiz_attempts = $result_quiz_attempts ? $result_quiz_attempts->fetch_assoc()['total'] : 0;
+       
+       // Contact messages count
+       $sql="SELECT COUNT(*) as total FROM contact";
        $result=$conn->query($sql);
-       $totalquiz=$result->num_rows;
+       $totalcontact = $result ? $result->fetch_assoc()['total'] : 0;
       
-
+      
       
       
      
@@ -154,32 +183,90 @@ Evaluate Exam</a>
         <div class="row text-center">
           <div class="col-md-4 mt-4">
             <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-              <div class="card-header"> Studnet Assaignment</div>
+              <div class="card-header">
+                <i class="fas fa-file-alt"></i> Assignment Submissions
+              </div>
               <div class="card-body">
                 <h4 class="card-title"><?php echo $totalass ?></h4>
-                <a class="btn btn-light" href="pass_assaignmentid.php">View</a>
+                <?php if($pending_ass > 0): ?>
+                  <small style="color: #ffc107;">
+                    <i class="fas fa-exclamation-circle"></i> <?php echo $pending_ass; ?> Pending
+                  </small><br>
+                <?php endif; ?>
+                <a class="btn btn-light" href="pass_assaignmentid.php">
+                  <i class="fas fa-eye"></i> View All
+                </a>
               </div>
             </div>
-          
           </div>
 
-                                    <div class="col-md-4 mt-4">
-            <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-              <div class="card-header"> Quiz information</div>
+          <div class="col-md-4 mt-4">
+            <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+              <div class="card-header">
+                <i class="fas fa-question-circle"></i> Total Quizzes
+              </div>
               <div class="card-body">
                 <h4 class="card-title"><?php echo $totalquiz ?></h4>
-                <a class="btn btn-light" href="quiz_information.php">View</a>
+                <small style="color: #d4edda;">
+                  <i class="fas fa-users"></i> <?php echo $total_quiz_submissions; ?> Students Submitted
+                </small><br>
+                <small style="color: #d4edda;">
+                  <i class="fas fa-chart-line"></i> <?php echo $total_quiz_attempts; ?> Total Attempts
+                </small><br>
+                <a class="btn btn-light" href="quiz_information.php">
+                  <i class="fas fa-eye"></i> View Results
+                </a>
               </div>
             </div>
-
-
-          
+          </div>
+          <div class="col-md-4 mt-4">
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+              <div class="card-header"> Contact Messages</div>
+              <div class="card-body">
+                <h4 class="card-title"><?php echo $totalcontact ?></h4>
+                <a class="btn btn-light" href="contact_messages.php">View</a>
+              </div>
             </div>
-            </div>
-
           </div>
         </div>
+
+        
       </main>
+      
+     <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 mt-5 pt-4"> 
+      <div class="col-md-4 mt-4">
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+              <div class="card-header"> assaignment marking information</div>
+              <div class="card-body">
+                <h4 class="card-title"></h4>
+                <a class="btn btn-light" href="assaignment_marking_information.php">View</a>
+              </div>
+            </div>
+          </div>
+        </div>  
+<div class="row text-center">
+          <div class="col-md-4 mt-4">
+            <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+              <div class="card-header">
+                <i class="fa-solid fa-file-circle-question"></i> Evaluate Exam
+              </div>
+              <div class="card-body">
+                <?php 
+                $sql_exam = "SELECT COUNT(DISTINCT exam_id) as total FROM exam_answers";
+                $result_exam = $conn->query($sql_exam);
+                $total_exams = $result_exam ? $result_exam->fetch_assoc()['total'] : 0;
+                ?>
+                <h4 class="card-title"><?php echo $total_exams; ?></h4>
+                <a class="btn btn-light" href="pass_evaluateexamid.php">
+                  <i class="fa-solid fa-clipboard-check"></i> Evaluate
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </main>
+
     </div>
     
     </div>

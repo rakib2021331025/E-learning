@@ -101,9 +101,23 @@ $q = $conn->query("SELECT * FROM assignment_submissions WHERE assignment_id='$as
 
         <p class="student-info"><b>Student:</b> <?php echo $s['student_email']; ?></p>
 
-        <a class="download-btn" href="<?php echo $s['file_path']; ?>" target="_blank">
-            Download Submission
+        <a class="download-btn" href="../<?php echo htmlspecialchars($s['file_path']); ?>" target="_blank">
+            <i class="fas fa-download"></i> Download Submission
         </a>
+        
+        <p style="color: #666; margin: 10px 0;">
+            <i class="fas fa-clock"></i> Submitted: <?php echo date('d M Y, h:i A', strtotime($s['submitted_at'] ?? 'now')); ?>
+        </p>
+        
+        <?php if($s['status'] == 'Checked'): ?>
+            <p style="color: #28a745; font-weight: bold;">
+                <i class="fas fa-check-circle"></i> Status: Evaluated
+            </p>
+        <?php else: ?>
+            <p style="color: #ffc107; font-weight: bold;">
+                <i class="fas fa-hourglass-half"></i> Status: Pending Evaluation
+            </p>
+        <?php endif; ?>
 
         <form method="POST">
             <input type="hidden" name="submit_id" value="<?php echo $s['id']; ?>">
@@ -129,14 +143,31 @@ if(isset($_POST['giveMarks'])){
     $marks = $_POST['marks'];
     $feedback = $_POST['feedback'];
 
+    $marks = floatval($marks);
+    $feedback = $conn->real_escape_string($feedback);
+    $id = intval($id);
+    
     $sql = "UPDATE assignment_submissions 
-            SET marks='$marks', feedback='$feedback', status='Checked'
-            WHERE id='$id'";
+            SET marks = $marks, 
+                feedback = '$feedback', 
+                status = 'Checked',
+                evaluated_at = NOW()
+            WHERE id = $id";
 
     if($conn->query($sql)){
+        if($conn->affected_rows > 0){
+            echo "<script>
+                    alert('Marks and Feedback Updated Successfully!');
+                    window.location.reload();
+                  </script>";
+        } else {
+            echo "<script>
+                    alert('No changes made or record not found.');
+                  </script>";
+        }
+    } else {
         echo "<script>
-                alert('Marks Updated Successfully!');
-                window.location='admindashboard.php';
+                alert('Error: " . addslashes($conn->error) . "');
               </script>";
     }
 }

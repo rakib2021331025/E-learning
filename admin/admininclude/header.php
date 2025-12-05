@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="css/adminstyle.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet" />
 </head>
 <body>
@@ -49,6 +50,9 @@
               <a class="nav-link" href="feedback.php"><i class="fas fa-comment"></i> Feedback</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="contact_messages.php"><i class="fas fa-envelope"></i> Contacts</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="adminchangepass.php"><i class="fas fa-key"></i> Change Password</a>
             </li>
             <li class="nav-item">
@@ -58,8 +62,29 @@
               <a class="nav-link" href="Teacherliveclass.php"><i class="fa-solid fa-video"></i>Live class</a>
 </li>
             <li class="nav-item">
-              <a class="nav-link" href="chat_dashboard.php"><i class="fa-solid fa-video"></i>chats</a>
+              <a class="nav-link" href="quiz_list.php">       <i class="fa-solid fa-file-circle-question"></i>quiz</a>
 </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add_assaignment.php">     <i class="fa-solid fa-file-lines"></i>
+assaignment</a>
+</li>
+<li class="nav-item">
+              <a class="nav-link" href="chat_dashboard.php">   <i class="fa-regular fa-comment"></i>
+chats</a>
+</li>
+<li class="nav-item">
+              <a class="nav-link" href="add_exam.php">   <i class="fa-solid fa-plus"></i>
+Add Exam</a>
+</li>
+
+<li class="nav-item">
+              <a class="nav-link" href="pass_evaluateexamid.php">  <i class="fa-solid fa-clipboard-check"></i>
+Evaluate Exam</a>
+</li>
+
+
+
+
 
 
        </ul>
@@ -75,8 +100,12 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/all.min.js"></script>
     <script type="text/javascript" src="js/ajaxrequest.js"></script>
-        <script type="text/javascript" src="js/adminajax.js"></script>
-        <script type="text/javascript" src="js/custom.js"></script>
+    <script type="text/javascript" src="js/adminajax.js"></script>
+    <script type="text/javascript" src="js/custom.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="../js/firebase-auth.js"></script>
 
 </body>
 </html>

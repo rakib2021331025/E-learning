@@ -2,129 +2,80 @@
 session_start();
 include '../dbconnection.php';
 
-// Check for multiple session variable names (support different login methods)
+// Check student login
 $student = $_SESSION['stu_email'] ?? $_SESSION['stulogEmail'] ?? $_SESSION['stuLogEmail'] ?? '';
-
-if(empty($student) || (!isset($_SESSION['is_login']) || $_SESSION['is_login'] !== true)){
+if(empty($student) || empty($_SESSION['is_login'])){
     header("Location: ../loginorsignup.php");
     exit();
 }
 
+// Check quiz_id
 if(!isset($_GET['quiz_id']) || empty($_GET['quiz_id'])){
-    die("<h3>No Quiz Selected</h3>");
+    die("Quiz ID missing!");
 }
 
 $quiz_id = intval($_GET['quiz_id']);
 
-// Fetch quiz
-$sql = "SELECT * FROM quizzes WHERE quiz_id = $quiz_id";
+// Fetch quiz questions
+$sql = "SELECT * FROM questions WHERE quiz_id = $quiz_id ORDER BY id ASC";
 $result = $conn->query($sql);
+?>
 
-if($result && $result->num_rows > 0){
-    $quiz = $result->fetch_assoc();
-
-    // CSS Styling
-    echo <<<STYLE
+<!DOCTYPE html>
+<html>
+<head>
+<title>Start Quiz</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f0f2f5;
-    padding: 20px;
-}
-.quiz-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 25px 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-.quiz-container h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 25px;
-}
-.question {
-    margin-bottom: 25px;
-    padding: 15px;
-    border-left: 5px solid #2196F3;
-    background: #f9f9f9;
-    border-radius: 8px;
-}
-.question b {
-    font-size: 16px;
-}
-.options input[type="radio"] {
-    margin-right: 8px;
-}
-.option-label {
-    display: block;
-    padding: 8px 12px;
-    margin: 5px 0;
-    border-radius: 8px;
-    background: #e9ecef;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.option-label:hover {
-    background: #d1e7ff;
-}
-.submit-btn {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background: #2196F3;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-.submit-btn:hover {
-    background: #0b7dda;
+body { background:#f0f0f0; font-family:Arial; padding:20px; }
+.box { max-width:800px; margin:auto; background:#fff; padding:25px; border-radius:10px; }
+.qbox { margin-bottom:25px; padding:20px; background:#fafafa; border-radius:8px; }
+.qbox h3 { margin-bottom:12px; color:#333; }
+.option { margin:5px 0; display:block; padding:8px; background:#fff; border-radius:6px; }
+.btn {
+    display:inline-block; padding:10px 18px;
+    background:#007bff; color:#fff;
+    text-decoration:none; border-radius:6px;
 }
 </style>
-<div class="quiz-container">
-STYLE;
+</head>
+<body>
 
-    // Quiz title
-    echo "<h2>".htmlspecialchars($quiz['quiz_title'])."</h2>";
+<div class="box">
+    <h2>Quiz Questions</h2>
 
-    // Fetch questions
-    $qsql = "SELECT * FROM questions WHERE quiz_id = $quiz_id";
-    $qresult = $conn->query($qsql);
+    <form method="POST" action="submit_quiz.php">
+        <input type="hidden" name="quiz_id" value="<?= $quiz_id ?>">
 
-    if($qresult && $qresult->num_rows > 0){
-        echo '<form action="submit_quiz.php" method="POST">';
-        echo '<input type="hidden" name="quiz_id" value="'.$quiz_id.'">';
-
+        <?php
         $i = 1;
-        while($row = $qresult->fetch_assoc()){
-            echo '<div class="question">';
-            echo "<b>Q".$i.": ".htmlspecialchars($row['question_text'])."</b><br>";
-            echo '<div class="options">';
-            $options = ['A'=>'option_a', 'B'=>'option_b', 'C'=>'option_c', 'D'=>'option_d'];
-            foreach($options as $key => $col){
-                $option_text = htmlspecialchars($row[$col]);
-                echo '<label class="option-label">';
-                echo '<input type="radio" name="answers['.$row['quiz_id'].']" value="'.$key.'" required> '.$option_text;
-                echo '</label>';
-            }
-            echo '</div>'; // options
-            echo '</div>'; // question
-            $i++;
-        }
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+        ?>
+        <div class="qbox">
+            <h3><?= $i++ ?>. <?= htmlspecialchars($row['question_text']); ?></h3>
 
-        echo '<input type="submit" class="submit-btn" value="Submit Quiz">';
-        echo '</form>';
-    } else {
-        echo "<p>No questions found for this quiz.</p>";
-    }
+            <?php 
+                $options = [
+                    "A" => $row["option_a"],
+                    "B" => $row["option_b"],
+                    "C" => $row["option_c"],
+                    "D" => $row["option_d"]
+                ];
 
-    echo '</div>'; // quiz-container
-} else {
-    echo "<p>Quiz not found.</p>";
-}
-?>
+                // CORRECT FIX: radio button group unique for each question
+                foreach($options as $key => $val){
+            ?>
+                <label class="option">
+                    <input type="radio" name="answers[<?= $row['id'] ?>]" value="<?= $key ?>" required>
+                    <?= htmlspecialchars($val) ?>
+                </label>
+            <?php } ?>
+        </div>
+        <?php } } else { echo "<p>No questions found!</p>"; } ?>
+
+        <button type="submit" class="btn">Submit Quiz</button>
+    </form>
+</div>
+
+</body>
+</html>
