@@ -66,7 +66,7 @@ include('../dbconnection.php');
   ?>
 </div>
 
-<!-- ➕ Add Course Button -->
+<!--  Add Course Button -->
 <a href="addnewstudent.php" class="btn btn-primary rounded-circle"
    style="position: fixed; bottom: 10px; right: 10px; width: 50px; height: 50px;
           display: flex; justify-content: center; align-items: center; font-size: 24px; z-index: 1000;"
