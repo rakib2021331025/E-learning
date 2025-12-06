@@ -1,0 +1,217 @@
+/* Responsive Design for Android Phones and Mobile Devices */
+
+/* Mobile First Approach */
+@media screen and (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        padding: 10px 5px !important;
+    }
+    
+    .navbar-brand {
+        font-size: 1.2em !important;
+    }
+    
+    .navbar-nav {
+        text-align: center;
+    }
+    
+    .nav-link {
+        padding: 8px 10px !important;
+        font-size: 14px;
+    }
+    
+    /* Cards */
+    .card {
+        margin: 10px 5px !important;
+    }
+    
+    .card-body {
+        padding: 15px !important;
+    }
+    
+    .card-title {
+        font-size: 18px !important;
+    }
+    
+    .card-text {
+        font-size: 14px !important;
+    }
+    
+    /* Buttons */
+    .btn {
+        padding: 8px 15px !important;
+        font-size: 14px !important;
+    }
+    
+    /* Forms */
+    .form-control {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding: 10px !important;
+    }
+    
+    /* Tables */
+    .table {
+        font-size: 12px !important;
+    }
+    
+    .table th,
+    .table td {
+        padding: 8px 5px !important;
+    }
+    
+    /* Admin Dashboard */
+    .sidebar {
+        width: 100% !important;
+        position: relative !important;
+        height: auto !important;
+    }
+    
+    .content-area {
+        margin-left: 0 !important;
+        padding: 10px !important;
+    }
+    
+    /* Student Dashboard */
+    .live-class-wrapper {
+        padding: 15px !important;
+    }
+    
+    .live-class-card {
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* Quiz Container */
+    .quiz-container {
+        padding: 15px !important;
+        margin: 10px !important;
+    }
+    
+    .question {
+        padding: 10px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* Exam Container */
+    .evaluation-wrapper {
+        padding: 15px !important;
+    }
+    
+    .question-card {
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* Assignment Cards */
+    .card {
+        width: 100% !important;
+        margin: 10px auto !important;
+    }
+    
+    /* Live Class Iframe */
+    .live-class-iframe {
+        height: 400px !important;
+        min-height: 400px !important;
+    }
+    
+    /* Modal */
+    .modal-dialog {
+        margin: 10px !important;
+    }
+    
+    .modal-content {
+        padding: 15px !important;
+    }
+    
+    /* Course Cards */
+    .row-cols-md-3 .col {
+        margin-bottom: 15px !important;
+    }
+    
+    /* Footer */
+    footer {
+        padding: 20px 10px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* Extra Small Devices (phones, 600px and down) */
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 10px !important;
+    }
+    
+    h1 {
+        font-size: 24px !important;
+    }
+    
+    h2 {
+        font-size: 20px !important;
+    }
+    
+    h3 {
+        font-size: 18px !important;
+    }
+    
+    .btn {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+    }
+    
+    .card-img-top {
+        height: 150px !important;
+    }
+    
+    .live-class-iframe {
+        height: 300px !important;
+    }
+}
+
+/* Small Devices (portrait tablets and large phones, 600px and up) */
+@media screen and (min-width: 600px) and (max-width: 768px) {
+    .container {
+        padding: 15px !important;
+    }
+    
+    .live-class-iframe {
+        height: 500px !important;
+    }
+}
+
+/* Landscape Orientation */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .live-class-iframe {
+        height: calc(100vh - 100px) !important;
+    }
+    
+    .navbar {
+        padding: 5px !important;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn {
+        min-height: 44px !important; /* Minimum touch target size */
+        min-width: 44px !important;
+    }
+    
+    .nav-link {
+        min-height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    input, select, textarea {
+        min-height: 44px !important;
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .card-img-top {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+

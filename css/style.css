@@ -1,0 +1,116 @@
+.navbar-brand{
+    font-family:"Ubuntu",sans-serif ;
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+}
+body{
+    background-color: #656746 !important;
+}
+ .navbar-item.custom-nav-item  a{
+    color: #fff !important;
+}
+.custom-nav-item:hover{
+    background-color: #dc3545;
+    border: solid 1px;
+    border-radius: 10px;
+}
+.vid-mar-remove{
+    margin: 0px;
+    padding: 0px;
+}
+.vid-parent{
+    position: relative;  
+    
+}
+video{
+    height: 100%;
+    width: 140%;
+}
+.vid-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 130%;
+    z-index: 1;
+    opacity: 0.8;
+    background-color:  #655455;
+}
+.vid-content{
+    position: absolute;
+    top: 42%;
+    color: white;
+    text-align: center;
+    left: 38%;
+    z-index: 2;
+}
+.btn.btn-danger{
+    margin: 15px;
+    padding: 15px;
+}
+.bottom-banner{
+    color: white;
+    padding: 10px;
+}
+
+.old-price{
+    text-decoration: line-through;
+      color: #999;
+      margin-right: 10px;
+    font-size: 12px;
+}
+.offer-price{
+    font-size: 18px;
+          color: #d63384;
+      font-weight: bold;
+      font-size: 1.2rem;
+}
+.card-img-top{
+    height: 200px;
+}
+.container.py-5{
+    background-color: #655464;
+    width: 100%;
+    
+}
+.container-fluid.bg-danger.txt-banner{
+    background-color: #655470;
+}
+.card.h-100.shadow{
+    margin: 10px 10px 10px 10px;
+}
+.course-gap {
+    margin-top: 50px; 
+  }
+  .contact-form {
+    width: 65%;
+    margin: 0;
+  }
+  .icons i{
+    margin: 10px;
+    font-size: 20px;
+  }
+  .modal-login-footer{
+    display: flex;
+  }
+
+  @media  screen and (min-width:0px) and (max-width:700px) {
+    .my-content{
+        display: none;
+    }
+    .txt-banner{
+        display: none;
+    }
+    .vid-content{
+        top: 12%;
+        left: 40%;
+    }
+     .custom-nav-item{
+        background-color:#225470 ;
+        padding: 10px 20px;
+    }
+}
+
+
+
