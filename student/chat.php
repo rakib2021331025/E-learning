@@ -2,7 +2,7 @@
 session_start();
 include "../dbconnection.php";
 
-// Check for multiple session variable names (support different login methods)
+
 $stuEmail = $_SESSION['stu_email'] ?? $_SESSION['stulogEmail'] ?? $_SESSION['stuLogEmail'] ?? '';
 
 if(empty($stuEmail) || (!isset($_SESSION['is_login']) || $_SESSION['is_login'] !== true)){
